@@ -1,0 +1,31 @@
+# Secrets — never commit. Use .env.example as the contract doc.
+.env
+.env.*
+!.env.example
+
+# Python virtualenv (the two common paths)
+venv/
+.venv/
+
+# Python build / cache artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+nim_proxy.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# IDE / tool caches that are personal to the machine
+.vscode/
+.idea/
+.claude.json
+
+# Local skill registry (machine-local, not part of the project)
+.atl/
+
+# Local launcher scripts (Windows-only, machine-specific)
+abrir_proyecto.bat
+run_claude.bat
+run

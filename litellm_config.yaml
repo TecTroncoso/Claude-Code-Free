@@ -1,0 +1,25 @@
+# NVIDIA NIM → OpenAI-compatible model-name aliases.
+# Claude Code requests arrive as claude-* model names; the proxy translates them
+# to the upstream NIM model defined in NIM_DEFAULT_MODEL env var.
+model_list:
+  - model_name: "*"
+    litellm_params:
+      model: "os.environ/NIM_DEFAULT_MODEL"
+      api_key: "os.environ/NVIDIA_API_KEY"
+      api_base: "https://integrate.api.nvidia.com/v1"
+  - model_name: claude-3-5-sonnet-20241022
+    litellm_params:
+      model: os.environ/NIM_DEFAULT_MODEL
+      api_key: os.environ/NVIDIA_API_KEY
+  - model_name: claude-3-7-sonnet-20250219
+    litellm_params:
+      model: os.environ/NIM_DEFAULT_MODEL
+      api_key: os.environ/NVIDIA_API_KEY
+
+general_settings:
+  disable_spend_logs: true
+  # rate-limit: (placeholder) per-key token bucket — follow-up slice.
+
+litellm_settings:
+  drop_params: true   # tolerate unsupported params from Claude Code
+  stream: true        # SSE passthrough on stream=true

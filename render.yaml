@@ -1,0 +1,28 @@
+# NOTE on secrets:
+# Render stores `NVIDIA_API_KEY` ONLY when declared with `sync: false` and set
+# manually in Dashboard → Service → Environment. Do NOT put the real key here.
+services:
+  - type: web
+    name: nim-proxy
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: "pip install uv && uv pip install --system -e ."
+    startCommand: "python main.py"
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NVIDIA_API_KEY
+        sync: false              # Set manually in the Render dashboard.
+      - key: LITELLM_MASTER_KEY
+        sync: false              # CRITICAL: Set a strong password here in Render so nobody steals your proxy!
+      - key: NIM_DEFAULT_MODEL
+        value: minimaxai/minimax-m3
+      - key: NIM_MODEL_ALLOWLIST
+        value: minimaxai/minimax-m3
+      # Reserved for the future rate-limit slice. Safe to leave unset today.
+      - key: RATE_LIMIT_BURST
+        sync: false
+      - key: RATE_LIMIT_REFILL_PER_SEC
+        sync: false
+
