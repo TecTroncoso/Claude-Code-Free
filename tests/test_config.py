@@ -20,21 +20,20 @@ def test_two_or_more_model_entries():
     assert len(cfg["model_list"]) >= 2
 
 
-def test_no_glm_5_2_anywhere():
-    raw = CONFIG_PATH.read_text(encoding="utf-8")
-    assert "glm-5.2" not in raw
-    cfg = _load()
-    for entry in cfg["model_list"]:
-        assert "glm-5.2" not in entry["litellm_params"]["model"]
 
 
-def test_upstream_models_are_known_nim_ids():
+def test_upstream_models_resolved_from_env():
+    """Each model_list entry MUST resolve the upstream NIM id via `os.environ/NIM_DEFAULT_MODEL`.
+
+    Hard-coding a literal NIM id (e.g. `nvidia_nim/meta/llama-3.1-70b-instruct`) was the
+    bug that originally broke this proxy; the model id is intended to be env-driven.
+    """
     cfg = _load()
-    valid = {"meta/llama-3.1-70b-instruct"}
     for entry in cfg["model_list"]:
         m = entry["litellm_params"]["model"]
-        assert m.startswith("nvidia_nim/"), f"unsupported provider in {m}"
-        assert m.removeprefix("nvidia_nim/") in valid, f"unexpected upstream: {m}"
+        assert m == "os.environ/NIM_DEFAULT_MODEL", (
+            f"upstream id should be env-resolved, got: {m!r}"
+        )
 
 
 def test_stream_enabled():

@@ -12,8 +12,8 @@ def _base_env() -> dict[str, str]:
     """Minimal env that lets the launcher pass pre-flight (does not exercise a real NIM call)."""
     env = os.environ.copy()
     env["NVIDIA_API_KEY"] = "test-key-not-real"
-    env["NIM_DEFAULT_MODEL"] = "meta/llama-3.1-70b-instruct"
-    env["NIM_MODEL_ALLOWLIST"] = "meta/llama-3.1-70b-instruct"
+    env["NIM_DEFAULT_MODEL"] = "nvidia_nim/meta/llama-3.1-70b-instruct"
+    env["NIM_MODEL_ALLOWLIST"] = "nvidia_nim/meta/llama-3.1-70b-instruct"
     return env
 
 

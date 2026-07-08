@@ -9,7 +9,7 @@ services:
     plan: starter
     buildCommand: "pip install uv && uv pip install --system -e ."
     startCommand: "python main.py"
-    healthCheckPath: /healthz
+    healthCheckPath: /health
     autoDeploy: true
     envVars:
       - key: NVIDIA_API_KEY
